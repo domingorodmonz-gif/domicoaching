@@ -23,10 +23,29 @@ const MultiStepForm = () => {
     setTimeout(next, 300);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (answers.instagram) setSubmitted(true);
-  };
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch("https://formspree.io/f/meelpppj", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(answers)
+    });
+
+    if (response.ok) {
+      setSubmitted(true);
+    } else {
+      alert("Something went wrong. Please try again.");
+    }
+
+  } catch (error) {
+    console.error(error);
+    alert("Error submitting form.");
+  }
+};
 
   if (submitted) {
     return (
