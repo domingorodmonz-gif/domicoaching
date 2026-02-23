@@ -1,5 +1,4 @@
 import MultiStepForm from "../components/MultiStepForm";
-import heroImage from "../assets/hero-fitness.jpg";
 
 const features = [
 { title: "Personalized training plan", desc: "Built around your schedule, experience, and goals." },
