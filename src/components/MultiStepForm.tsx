@@ -19,6 +19,7 @@ const investOptions = ["Yes", "Possibly", "Not right now"];
 const MultiStepForm = () => {
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState({
+    name: "",
     goal: "",
     duration: "",
     obstacle: "",
@@ -43,13 +44,31 @@ const MultiStepForm = () => {
     e.preventDefault();
 
     try {
+      // 1. Enviar a Formspree (como antes)
       const response = await fetch("https://formspree.io/f/meelpppj", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(answers)
       });
+
+      // 2. Enviar a n8n para captura en CRM
+      fetch("https://lithely-camailed-brielle.ngrok-free.dev/webhook/lead-form", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: answers.name,
+          ig_handle: answers.instagram || "",
+          email: answers.email,
+          goal: answers.goal,
+          training_history: answers.duration,
+          obstacle: answers.obstacle,
+          commitment: answers.commitment,
+          start_timeline: answers.startTimeline,
+          looking_for: answers.lookingFor,
+          ready_to_invest: answers.readyToInvest,
+          whatsapp: answers.whatsapp
+        })
+      }).catch(() => {});
 
       if (response.ok) {
         setSubmitted(true);
@@ -84,7 +103,7 @@ const MultiStepForm = () => {
         </h3>
         <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
           Thank you for applying. I personally review every application. If it looks like a good
-          fit, I’ll reach out shortly via WhatsApp or email with the next step.
+          fit, I'll reach out shortly via WhatsApp or email with the next step.
         </p>
       </div>
     );
@@ -209,6 +228,15 @@ const MultiStepForm = () => {
               <input
                 type="text"
                 required
+                value={answers.name}
+                onChange={(e) => setAnswers((p) => ({ ...p, name: e.target.value }))}
+                placeholder="Full name"
+                className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+              />
+
+              <input
+                type="text"
+                required
                 value={answers.whatsapp}
                 onChange={(e) => setAnswers((p) => ({ ...p, whatsapp: e.target.value }))}
                 placeholder="WhatsApp number"
@@ -318,3 +346,4 @@ const TextInput = ({
 );
 
 export default MultiStepForm;
+rr
