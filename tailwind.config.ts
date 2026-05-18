@@ -64,8 +64,9 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        heading: ['DM Serif Display', 'serif'],
-        body: ['DM Sans', 'sans-serif'],
+        heading: ['Inter Tight', '-apple-system', 'sans-serif'],
+        body: ['Inter Tight', '-apple-system', 'sans-serif'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
       },
       keyframes: {
         "accordion-down": {
