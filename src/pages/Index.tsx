@@ -55,7 +55,7 @@ const Index = () => {
               </div>
             </motion.div>
             <motion.a
-              href="https://www.instagram.com/domingomnzon/"
+              href="https://www.instagram.com/domingomonzonx/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center w-9 h-9 rounded-full transition-colors"
